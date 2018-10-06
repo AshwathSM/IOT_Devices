@@ -8,7 +8,7 @@ import os
 from datetime import datetime
 class SensorData():
     timeStamp= None
-    name= 'Not set'
+    name= 'TEMPERATURE READINGS'
     curValue= 0
     avgValue= 0
     minValue= 0

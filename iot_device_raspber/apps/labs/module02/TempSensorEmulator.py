@@ -17,9 +17,15 @@ class TempSensorEmulator(threading.Thread):
     prevTempSet = False
     isPrevTempSet = False
     curTemp = 0
+    
+    #random temperature limits
     lowVal = 0
     highVal = 30
+    
+    #probe rate
     rateInSec = 10
+    
+    #keep the alert threshold to +/- 10 degrees
     alertDiff = 10
     
     #Instantiate SensorData class
@@ -52,22 +58,15 @@ class TempSensorEmulator(threading.Thread):
                 print('New sensor Readings:')
                 print(' '+str(self.sensorData))
                 
-                #TEST_LINE
-                print('testing 3rd')
-                
                 #Check if the this is the first reading, if so just move on till the next reading
                 if self.isPrevTempSet == False:
-                    print('testing 3rd once again')    
+                        
                     self.isPrevTempSet = True
                 #If there have been already some readings, then go ahead and calculate average temperature
                 else:
-                    #TEST_LINE
-                    print('testing 1st')
-                    
                     #If the current temperature is not in the range of avg_temp-10 < avg_temp < avg_temp+10
                     if ((abs(self.curTemp - self.sensorData.getAvgValue()))>=self.alertDiff):
-                        #TEST_LINE
-                        print('testing 2ndt')
+                        
                         print('\n Current temp exceeds average by > '+ str(self.alertDiff)+ '. Triggering alert...')
                         #If the temperature is out of threshold call publishMessage() to send alert mail
                         #Send the sensorData elements as the body for the message
