@@ -5,6 +5,8 @@ Created on Oct 6, 2018
 '''
 from labs.common.ActuatorData import ActuatorData
 from RPi import GPIO
+from labs.module03.SimpleLedActivator import SimpleLedActivator
+from labs.module03.SenseHatLedActivator import SenseHatLedActivator
 
 class TempActuatorEmulator():   
 
@@ -16,12 +18,16 @@ class TempActuatorEmulator():
      
     def processMessage(self, actuatorData):
         
+#         led = SenseHatLedActivator()
+#         led.setEnableLedFlag(True)
+#         led.start()
         
         if(self.thisActuatorData!=actuatorData):
         
             if (actuatorData.getCommand() == 'INCREASE'):           
                 print('Increasing temperature')
                 GPIO.set_rotation(actuatorData.getValue())
+#                 led.run()
             
             elif (actuatorData.getCommand() == 'DECREASE'):
                 print('Decreasing temperature')

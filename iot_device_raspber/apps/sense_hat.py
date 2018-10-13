@@ -43,6 +43,7 @@ class SenseHat():
 
     def set_rotation(self, rotateDeg):
         self.rotateDeg = rotateDeg
+        print('rotating by {rotateDeg}')
 
     def show_letter(self, val):
         print(val)
