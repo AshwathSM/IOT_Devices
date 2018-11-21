@@ -44,14 +44,7 @@ public class CoapServerConnection {
 //		
 //	}
 	
-	public void addResources(CoapResource resource)
-	{
-		if(resource!=null)
-		{
-				_coapServer.add(resource);
-		}
-		
-	}
+
 	
 	public void start()
 	{

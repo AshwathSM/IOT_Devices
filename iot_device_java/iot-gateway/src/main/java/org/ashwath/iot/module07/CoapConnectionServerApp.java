@@ -1,5 +1,6 @@
 package org.ashwath.iot.module07;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CoapConnectionServerApp {
@@ -23,7 +24,7 @@ public class CoapConnectionServerApp {
 			_app.start();
 		}catch(Exception e)
 		{
-			
+			_logger.log(Level.SEVERE, "Server not running", e);
 		}
 
 	}
