@@ -59,12 +59,12 @@ public class TempResourceHandler extends CoapResource {
 	public void handlePOST(CoapExchange ce)
 	{
 		File file = new File("/home/ashwath/Downloads/connectedDocs/myTemp.txt");
-//		FileInputStream fis = null;
+
 		FileOutputStream fos = null;
 		
 		
 		try {
-//			fis = new FileInputStream(file);
+
 			fos = new FileOutputStream(file);
 			
 			if(!file.exists())
@@ -122,13 +122,9 @@ public class TempResourceHandler extends CoapResource {
 	public void handleDELETE(CoapExchange ce)
 	{
 		File file = new File("/home/ashwath/Downloads/connectedDocs/myTemp.txt");
-
-
 		
 		
-		try {
-
-			
+		try {			
 			
 			PrintWriter pw = new PrintWriter(file);
 			

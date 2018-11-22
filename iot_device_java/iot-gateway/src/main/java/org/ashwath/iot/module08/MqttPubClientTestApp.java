@@ -1,4 +1,4 @@
-package org.ashwath.iot.module06;
+package org.ashwath.iot.module08;
 
 import java.util.logging.Logger;
 
@@ -45,7 +45,7 @@ public class MqttPubClientTestApp {
 		
 //		_clientConn.messageArrived(topicName, message);
 		
-		_clientConn.disconnect();
+//		_clientConn.disconnect();
 		
 	}
 }

@@ -1,30 +1,30 @@
-package org.ashwath.iot.module06;
+package org.ashwath.iot.module08;
 
 import java.util.logging.Logger;
 
-public class MqttPubClientTestApp {
-
-	Logger _logger = Logger.getLogger(MqttPubClientTestApp.class.getName());
+public class MqttSubClientApp {
 	
-	private static MqttPubClientTestApp _App;
+	
+	Logger _logger = Logger.getLogger(MqttSubClientApp.class.getName());
+	
+	private static MqttSubClientApp _App;
 	private MqttClientConnector _clientConn;
 	
-	public MqttPubClientTestApp() {
+	public MqttSubClientApp() {
 		super();
 	}
 	
 	public static void main(String[] args) {
 		
-		_App = new MqttPubClientTestApp();
+		_App = new MqttSubClientApp();
 		
 		try {
 			_App.start();
 		}catch(Exception e)
 		{
 			e.printStackTrace();
-		}
-		
-//		return 0;
+		}		
+
 
 	}
 	
@@ -34,18 +34,19 @@ public class MqttPubClientTestApp {
 		_clientConn.connect();
 		
 		String topicName = "test";
-		String payload = "this is a test ......";
+		String payload = "this is a test retest......";
 		
 		_clientConn.subscribeToTopic(topicName);
 		_clientConn.publishMessage(topicName, 0, payload.getBytes());
-//		_clientConn.publishMessage(topicName, 1, payload.getBytes());
-//		_clientConn.publishMessage(topicName, 2, payload.getBytes());
-//		
+		
+
+		
 		
 		
 //		_clientConn.messageArrived(topicName, message);
 		
-		_clientConn.disconnect();
+//		_clientConn.disconnect();
 		
 	}
+
 }

@@ -1,6 +1,8 @@
-package org.ashwath.iot.module06;
+package org.ashwath.iot.module08;
 
 import java.util.logging.Logger;
+
+import javax.net.ssl.SSLContext;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -16,8 +18,8 @@ public class MqttClientConnector implements MqttCallback{
 	
 	private static final Logger _logger = Logger.getLogger(MqttClientConnector.class.getName());
 	
-	private String _protocol = "tcp";
-	private String _host = "iot.eclipse.org";
+	private String _protocol = "ssl";
+	private String _host = "things.ubidots.com";
 	private int _port = 1883;
 	
 	private String _clientID;
@@ -25,6 +27,8 @@ public class MqttClientConnector implements MqttCallback{
 	
 	private MqttClient _mqttClient;
 	
+	private String _userName;
+	private String _authToken;
 	
 	public MqttClientConnector()
 	{
@@ -51,6 +55,47 @@ public class MqttClientConnector implements MqttCallback{
 		
 	}
 	
+	   // constructor
+	   /**
+	    * Constructor.
+	    *
+	    * @param host        The name of the broker to connect.
+	    * @param userName    The username for authorizing access to the broker.
+	    * @param pemFileName The name of the certificate file to use. If null / invalid, ignored.
+	    */
+	 public MqttClientConnector(String host, String userName, String pemFileName)
+	 {
+		 super();
+		 if (host != null && host.trim().length() > 0) 
+		 {
+			 _host = host;
+		 }
+		 
+		 if (userName != null && userName.trim().length() > 0) {
+			 _userName = userName;
+		 }
+		 if (authToken != null && authToken.trim().length() > 0) {
+			 _authToken = authToken;
+		 }
+		 
+		 if (pemFileName != null) {
+			 File file = new File(pemFileName);
+			 if (file.exists()) {
+				 _protocol     = “ssl”;
+				 _port         = 8883;
+				 _pemFileName  = pemFileName;
+				 _isSecureConn = true;
+				 _Logger.info("PEM file valid. Using secure connection: " + _pemFileName);
+			 } else {
+				 _Logger.warning("PEM file invalid. Using insecure connection: " + pemFileName);
+			 }
+		 }
+		 _clientID   = MqttClient.generateClientId();
+		 _brokerAddr = _protocol + "://" + _host + ":" + _port;
+		 _Logger.info("Using URL for broker conn: " + _brokerAddr);
+	   }
+
+	
 	public void connect()
 	{
 		if(_mqttClient==null)
@@ -60,6 +105,11 @@ public class MqttClientConnector implements MqttCallback{
 			try {
 				_mqttClient = new MqttClient(_brokerAddr, _clientID, persistence);
 				MqttConnectOptions connOpts = new MqttConnectOptions();
+				connOpts.setUserName("A1E-adR67vFqGFdJK0GSztehlkrBF9PKgz");
+				connOpts.setPassword("".toCharArray());
+				
+//				SSLContext sslContext = 
+				
 				connOpts.setCleanSession(true);
 				
 				_logger.info("connecting to broker: "+_brokerAddr);
@@ -140,15 +190,16 @@ public class MqttClientConnector implements MqttCallback{
 		
 		
 		_logger.log(Level.WARNING, "connection to broker is lost", cause);
-//		connect();
+		connect();
 		
 	}
 
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		
-		_logger.info("Message arrived: "+ message+ " from topic: "+topic);
+		_logger.info("Message arrived: "+ message.toString()+ "from topic: "+topic);
 		
 	}
+
 	public void deliveryComplete(IMqttDeliveryToken token) {
 		
 		try {
