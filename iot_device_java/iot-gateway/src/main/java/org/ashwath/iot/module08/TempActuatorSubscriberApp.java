@@ -43,15 +43,7 @@ public class TempActuatorSubscriberApp {
 		
 		_clientConn.subscribeToTopic(topicName);
 		
-//		_clientConn.publishMessage(topicName, 0, payload.getBytes());
-//		_clientConn.publishMessage(topicName, 1, payload.getBytes());
-//		_clientConn.publishMessage(topicName, 2, payload.getBytes());
-//		
-		
-		
-//		_clientConn.messageArrived(topicName, message);
-		
-//		_clientConn.disconnect();
+
 		
 	}
 }
