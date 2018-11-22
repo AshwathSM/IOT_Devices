@@ -20,8 +20,11 @@ public class CoAP_Client_Connector
 	private static final Logger _logger = Logger.getLogger(CoAP_Client_Connector.class.getName());
 	
 	
+//	private String  _protocol = "coap";
 	private String  _protocol = "coap";
-	private String  _host = "californium.eclipse.org";
+//	private String  _host = "californium.eclipse.org";
+	private String  _host = "127.0.0.1";
+//	private int     _port = 5683;
 	private int     _port = 5683;
 	private String  _connUrl = null;
 	private CoapClient _coapClient;
@@ -32,7 +35,7 @@ public class CoAP_Client_Connector
 	
 	public CoAP_Client_Connector()
 	{
-		this("californium.eclipse.org", false);
+		this("127.0.0.1", false);
 	}
 	
 	public CoAP_Client_Connector(String host, boolean isSecure)
@@ -82,7 +85,8 @@ public class CoAP_Client_Connector
 			sendPostRequest(payload, false);
 			sendPostRequest(payload, true);
 			sendPutRequest(payload, false);
-			sendPutRequest(payload, true);		
+			sendPutRequest(payload, true);
+			sendDeleteRequest();
 			
 			
 		}catch(Exception e)
@@ -176,7 +180,7 @@ public class CoAP_Client_Connector
     {
     	initClient();
     	
-    	handleDeleteRequest();
+    	handleDeleteRequest(false);
     }
     
     public void sendDeleteRequest(String resourceName)
@@ -185,7 +189,7 @@ public class CoAP_Client_Connector
     	
     	initClient(resourceName);
     	
-    	handleDeleteRequest();
+    	handleDeleteRequest(false);
     }
     
     
@@ -280,9 +284,30 @@ public class CoAP_Client_Connector
     }
     
     
-    private void handleDeleteRequest() 
+    private void handleDeleteRequest(boolean useNON) 
     {
     	//to be implemented
+    	
+    	_logger.info("Sending DELETE request...");
+    	
+    	CoapResponse response = null;
+    	if(useNON)
+    	{
+    		_coapClient.useNONs().useEarlyNegotiation(32).get();
+    	}
+    	
+    	response = _coapClient.delete();
+    	
+    	if(response!=null)
+    	{
+    		_logger.info("Response: "+response.isSuccess()+"-"+response.getOptions()+"-"+response.getCode());
+    	}
+    	else {
+    		_logger.warning("No response received");
+    	}
+    	
+    	_logger.info("RESPONSE FROM THE SERVER: " + response.getResponseText());
+    	
     }
     
     private void handleGetRequest(boolean useNON)
@@ -306,7 +331,7 @@ public class CoAP_Client_Connector
     		_logger.warning("No response received");
     	}
     	
-    	//to be implemented
+    	_logger.info("RESPONSE FROM THE SERVER: " + response.getResponseText());
     	
     }
     
@@ -328,6 +353,9 @@ public class CoAP_Client_Connector
     	else {
     		_logger.warning("No response received");
     	}
+    	
+    	_logger.info("RESPONSE FROM SERVER: "+ response.getResponseText());
+    	
     }
     
     private void handlePostRequest(String payload, boolean useCON)
@@ -346,7 +374,9 @@ public class CoAP_Client_Connector
     		_logger.info("Response:" + response.isSuccess() + "-" + response.getOptions() +"-" + response.getCode());
     	}else {
     		_logger.warning("No response received");
-    	}   		
+    	}   	
+    	
+    	_logger.info("RESPONSE FROM SERVER: "+ response.getResponseText());
     	
     }
     
