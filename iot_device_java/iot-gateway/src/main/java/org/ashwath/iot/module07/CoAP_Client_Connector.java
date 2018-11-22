@@ -79,13 +79,13 @@ public class CoAP_Client_Connector
 			
 			pingServer();
 			discoverResources();
-			displayResources();
-			sendGetRequest();
-			sendGetRequest(true);
+			displayResources();			
 			sendPostRequest(payload, false);
 			sendPostRequest(payload, true);
 			sendPutRequest(payload, false);
 			sendPutRequest(payload, true);
+			sendGetRequest();
+			sendGetRequest(true);
 			sendDeleteRequest();
 			
 			

@@ -12,6 +12,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import java.io.File;
 import java.util.logging.Level;
 
 public class MqttClientConnector implements MqttCallback{
@@ -29,6 +30,8 @@ public class MqttClientConnector implements MqttCallback{
 	
 	private String _userName;
 	private String _authToken;
+	private String _pemFileName;
+	private boolean _isSecureConn = false;
 	
 	public MqttClientConnector()
 	{
@@ -74,25 +77,25 @@ public class MqttClientConnector implements MqttCallback{
 		 if (userName != null && userName.trim().length() > 0) {
 			 _userName = userName;
 		 }
-		 if (authToken != null && authToken.trim().length() > 0) {
-			 _authToken = authToken;
-		 }
+//		 if (authToken != null && authToken.trim().length() > 0) {
+//			 _authToken = authToken;
+//		 }
 		 
 		 if (pemFileName != null) {
-			 File file = new File(pemFileName);
+			 File file = new File("/home/ashwath/Downloads/connectedDocs/ubidots.pem");
 			 if (file.exists()) {
-				 _protocol     = “ssl”;
+				 _protocol     = "ssl";
 				 _port         = 8883;
 				 _pemFileName  = pemFileName;
 				 _isSecureConn = true;
-				 _Logger.info("PEM file valid. Using secure connection: " + _pemFileName);
+				 _logger.info("PEM file valid. Using secure connection: " + _pemFileName);
 			 } else {
-				 _Logger.warning("PEM file invalid. Using insecure connection: " + pemFileName);
+				 _logger.warning("PEM file invalid. Using insecure connection: " + pemFileName);
 			 }
 		 }
 		 _clientID   = MqttClient.generateClientId();
 		 _brokerAddr = _protocol + "://" + _host + ":" + _port;
-		 _Logger.info("Using URL for broker conn: " + _brokerAddr);
+		 _logger.info("Using URL for broker conn: " + _brokerAddr);
 	   }
 
 	
@@ -103,14 +106,12 @@ public class MqttClientConnector implements MqttCallback{
 			
 			MemoryPersistence persistence = new MemoryPersistence();
 			try {
+				
 				_mqttClient = new MqttClient(_brokerAddr, _clientID, persistence);
 				MqttConnectOptions connOpts = new MqttConnectOptions();
 				connOpts.setUserName("A1E-adR67vFqGFdJK0GSztehlkrBF9PKgz");
-				connOpts.setPassword("".toCharArray());
 				
-//				SSLContext sslContext = 
-				
-				connOpts.setCleanSession(true);
+				connOpts.setCleanSession(false);
 				
 				_logger.info("connecting to broker: "+_brokerAddr);
 				
