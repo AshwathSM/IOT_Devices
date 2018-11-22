@@ -2,7 +2,9 @@ package org.ashwath.iot.module08;
 
 
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.json.simple.JSONObject;
 
 public class TempSensorPublisherApp {
@@ -24,6 +26,7 @@ public class TempSensorPublisherApp {
 		
 		_App = new TempSensorPublisherApp();
 		
+		
 		try {
 			_App.start();
 		}catch(Exception e)
@@ -44,21 +47,31 @@ public class TempSensorPublisherApp {
 		String payload;
 		JSONObject obj = new JSONObject();
 		
-	
-		Random rand = new Random();
-		int val = rand.nextInt(40) +1;
+		while(true) {
 			
-		obj.put("value", val);
-		
-	//	String payload = "{\"tempSensor\":\"30\"}";
+			try {
+				Thread.sleep(1000*60);
+			}catch(InterruptedException e)
+			{
+				Thread.currentThread().interrupt();
+				_logger.log(Level.WARNING, "interrupted", e);
+			}
 			
-		payload = obj.toJSONString();
-			
-	//	_clientConn.subscribeToTopic(topicName);
-		_clientConn.publishMessage(topicName, 0, payload.getBytes());
+			Random rand = new Random();
+			int val = rand.nextInt(40) +1;
 				
-	
-		_clientConn.disconnect();
+			obj.put("value", val);
+			
+		//	String payload = "{\"tempSensor\":\"30\"}";
+				
+			payload = obj.toJSONString();
+				
+
+			_clientConn.publishMessage(topicName, 0, payload.getBytes());
+					
+		
+//			_clientConn.disconnect();
+		}
 		
 	}
 
