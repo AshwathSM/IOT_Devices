@@ -37,8 +37,9 @@ public class TempActuatorSubscriberApp {
 		_clientConn = new MqttClientConnector("things.ubidots.com", token, pemFileName);
 		_clientConn.connect();
 		
-		String topicName = "/v1.6/devices/homeIoTGateway/tempActuator";
-		String payload = "this is a test ......";
+		String topicName = "/v1.6/devices/homeiotgateway/tempactuator/lv";
+//		String topicName = "$SYS/#";
+		
 		
 		_clientConn.subscribeToTopic(topicName);
 		

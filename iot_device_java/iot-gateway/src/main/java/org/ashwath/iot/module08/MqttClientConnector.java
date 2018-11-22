@@ -200,6 +200,8 @@ public class MqttClientConnector implements MqttCallback{
 	{
 		try {
 			_mqttClient.subscribe(topic);
+			
+			_logger.info("Subscribed to the topic: "+topic);
 			return true;
 		}catch(Exception e)
 		{
@@ -219,6 +221,7 @@ public class MqttClientConnector implements MqttCallback{
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		
 //		message.getPayload().
+		_logger.info("ARRIVED!!");
 		
 		_logger.info("Message arrived: "+ message.toString()+ "from topic: "+topic);
 		

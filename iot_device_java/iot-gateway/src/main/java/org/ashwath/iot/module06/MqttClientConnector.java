@@ -79,7 +79,7 @@ public class MqttClientConnector implements MqttCallback{
 	{
 		try {
 			_mqttClient.disconnect();
-			_logger.info("connected to the broker: "+_brokerAddr);			
+			_logger.info("disconnected from the broker: "+_brokerAddr);			
 		}catch(Exception e)
 		{
 			_logger.log(Level.SEVERE, "failed to disconnect from the broker: "+_brokerAddr, e);
