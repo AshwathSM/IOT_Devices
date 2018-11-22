@@ -37,9 +37,9 @@ public class MqttPubClientTestApp {
 		String payload = "this is a test ......";
 		
 		_clientConn.subscribeToTopic(topicName);
-		_clientConn.publishMessage(topicName, 0, payload.getBytes());
+//		_clientConn.publishMessage(topicName, 0, payload.getBytes());
 //		_clientConn.publishMessage(topicName, 1, payload.getBytes());
-//		_clientConn.publishMessage(topicName, 2, payload.getBytes());
+		_clientConn.publishMessage(topicName, 2, payload.getBytes());
 //		
 		
 		

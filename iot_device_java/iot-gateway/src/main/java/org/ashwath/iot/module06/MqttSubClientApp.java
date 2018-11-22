@@ -1,5 +1,6 @@
 package org.ashwath.iot.module06;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MqttSubClientApp {
@@ -34,17 +35,19 @@ public class MqttSubClientApp {
 		_clientConn.connect();
 		
 		String topicName = "test";
-//		String payload = "this is a test retest......";
 		
 		_clientConn.subscribeToTopic(topicName);
-//		_clientConn.publishMessage(topicName, 0, payload.getBytes());
+	
+		try {
+			Thread.sleep(1000*60);
+		}catch(InterruptedException e)
+		{
+			Thread.currentThread().interrupt();
+			_logger.log(Level.WARNING, "interrupted", e);
+		}
 		
+		_clientConn.unsubscribeToTopic(topicName);
 
-		
-		
-		
-//		_clientConn.messageArrived(topicName, message);
-		
 //		_clientConn.disconnect();
 		
 	}
