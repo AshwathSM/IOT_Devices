@@ -1,6 +1,8 @@
 package org.ashwath.iot.module08;
 
+
 import java.util.logging.Logger;
+import org.json.simple.JSONObject;
 
 public class TempSensorPublisherApp {
 	
@@ -37,7 +39,14 @@ public class TempSensorPublisherApp {
 		_clientConn.connect();
 		
 		String topicName = "/v1.6/devices/homeIoTGateway/tempSensor";
-		String payload = "this is a test retest......";
+		
+		String payload;
+		JSONObject obj = new JSONObject();
+		obj.put("value", 10);
+//		
+//		String payload = "{\"tempSensor\":\"30\"}";
+		
+		payload = obj.toJSONString();
 		
 //		_clientConn.subscribeToTopic(topicName);
 		_clientConn.publishMessage(topicName, 0, payload.getBytes());

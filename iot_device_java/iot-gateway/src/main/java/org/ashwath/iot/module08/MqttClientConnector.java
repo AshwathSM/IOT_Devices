@@ -165,6 +165,7 @@ public class MqttClientConnector implements MqttCallback{
 			_logger.info("publishing message to the topic: "+ topic);
 			
 			MqttMessage mqttMsg = new MqttMessage();
+			mqttMsg.setPayload(payload);
 			mqttMsg.setQos(qosLevel);
 			
 			_mqttClient.publish(topic, mqttMsg);
@@ -216,6 +217,8 @@ public class MqttClientConnector implements MqttCallback{
 	}
 
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
+		
+//		message.getPayload().
 		
 		_logger.info("Message arrived: "+ message.toString()+ "from topic: "+topic);
 		

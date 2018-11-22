@@ -94,6 +94,8 @@ public class MqttClientConnector implements MqttCallback{
 			_logger.info("publishing message to the topic: "+ topic);
 			
 			MqttMessage mqttMsg = new MqttMessage();
+			
+			mqttMsg.setPayload(payload);
 			mqttMsg.setQos(qosLevel);
 			
 			_mqttClient.publish(topic, mqttMsg);
