@@ -3,6 +3,7 @@ package org.ashwath.iot.module08;
 import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -12,7 +13,17 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
 import java.util.logging.Level;
 
 public class MqttClientConnector implements MqttCallback{
@@ -21,7 +32,7 @@ public class MqttClientConnector implements MqttCallback{
 	
 	private String _protocol = "ssl";
 	private String _host = "things.ubidots.com";
-	private int _port = 1883;
+	private int _port = 8883;
 	
 	private String _clientID;
 	private String _brokerAddr;
@@ -82,7 +93,7 @@ public class MqttClientConnector implements MqttCallback{
 //		 }
 		 
 		 if (pemFileName != null) {
-			 File file = new File("/home/ashwath/Downloads/connectedDocs/ubidots.pem");
+			 File file = new File(pemFileName); 
 			 if (file.exists()) {
 				 _protocol     = "ssl";
 				 _port         = 8883;
@@ -109,11 +120,18 @@ public class MqttClientConnector implements MqttCallback{
 				
 				_mqttClient = new MqttClient(_brokerAddr, _clientID, persistence);
 				MqttConnectOptions connOpts = new MqttConnectOptions();
+				
 				connOpts.setUserName("A1E-adR67vFqGFdJK0GSztehlkrBF9PKgz");
 				
 				connOpts.setCleanSession(false);
 				
-				_logger.info("connecting to broker: "+_brokerAddr);
+				if(_userName!=null)
+				{
+					connOpts.setUserName(_userName);
+				}
+				
+				if(_isSecureConn)
+					initSecureConnection(connOpts);				
 				
 				_mqttClient.setCallback(this);
 				_mqttClient.connect(connOpts);
@@ -125,6 +143,8 @@ public class MqttClientConnector implements MqttCallback{
 			}
 		}
 	}
+	
+	
 		
 	public void disconnect()
 	{
@@ -212,6 +232,39 @@ public class MqttClientConnector implements MqttCallback{
 		
 	}
 	
+	private void initSecureConnection(MqttConnectOptions connOpts)
+	{
+		try {
+			_logger.info("Configuring TLS...");
+			SSLContext sslContext = SSLContext.getInstance("SSL");
+			KeyStore keystore = readCertificate();
+			TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+			trustManagerFactory.init(keystore);
+			sslContext.init(null, trustManagerFactory.getTrustManagers(), new SecureRandom());
+			connOpts.setSocketFactory(sslContext.getSocketFactory());
+			
+		}catch(Exception e)
+		{
+			_logger.log(Level.SEVERE, "failed to initialize MqTT connection", e);
+		}
+	}
+	
+	private KeyStore readCertificate() throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException
+	{
+		KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+		FileInputStream fis = new FileInputStream(_pemFileName);
+		BufferedInputStream bis = new BufferedInputStream(fis);
+		CertificateFactory cf = CertificateFactory.getInstance("X.509");
+		ks.load(null);
+		
+		while(bis.available()>0)
+		{
+			Certificate cert = cf.generateCertificate(bis);
+			ks.setCertificateEntry("asm_store"+bis.available(), cert);
+		}
+		
+		return ks;
+	}
 
 	
 	

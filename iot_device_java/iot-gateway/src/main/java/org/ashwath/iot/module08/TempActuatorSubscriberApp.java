@@ -2,20 +2,24 @@ package org.ashwath.iot.module08;
 
 import java.util.logging.Logger;
 
-public class MqttPubClientTestApp {
+public class TempActuatorSubscriberApp {
 
-	Logger _logger = Logger.getLogger(MqttPubClientTestApp.class.getName());
+	Logger _logger = Logger.getLogger(TempActuatorSubscriberApp.class.getName());
 	
-	private static MqttPubClientTestApp _App;
+	String token = "A1E-ntVJzB9Nm7a9ai9EN6AZJsjqTKXRHp";
+	String pemFileName = "/home/ashwath/Downloads/connectedDocs/ubidots.pem";
+	
+	private static TempActuatorSubscriberApp _App;
 	private MqttClientConnector _clientConn;
 	
-	public MqttPubClientTestApp() {
+	
+	public TempActuatorSubscriberApp() {
 		super();
 	}
 	
 	public static void main(String[] args) {
 		
-		_App = new MqttPubClientTestApp();
+		_App = new TempActuatorSubscriberApp();
 		
 		try {
 			_App.start();
@@ -30,14 +34,15 @@ public class MqttPubClientTestApp {
 	
 	public void start()
 	{
-		_clientConn = new MqttClientConnector();
+		_clientConn = new MqttClientConnector("things.ubidots.com", token, pemFileName);
 		_clientConn.connect();
 		
-		String topicName = "test";
+		String topicName = "/v1.6/devices/homeIoTGateway/tempActuator";
 		String payload = "this is a test ......";
 		
 		_clientConn.subscribeToTopic(topicName);
-		_clientConn.publishMessage(topicName, 0, payload.getBytes());
+		
+//		_clientConn.publishMessage(topicName, 0, payload.getBytes());
 //		_clientConn.publishMessage(topicName, 1, payload.getBytes());
 //		_clientConn.publishMessage(topicName, 2, payload.getBytes());
 //		
