@@ -10,6 +10,8 @@ class SystemPerformanceAdaptor(threading.Thread):
     classdocs
     '''
     enableAdaptor =False
+    
+    #Set rate to run the thread every 5 seconds (get the CPU data every 5 seconds)
     rateInSec = 5
     
     def __init__(self, rateInSec=5):

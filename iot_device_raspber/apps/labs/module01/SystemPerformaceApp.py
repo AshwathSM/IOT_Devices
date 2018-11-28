@@ -2,6 +2,8 @@
 Created on Sep 15, 2018
 
 @author: ashwath
+
+Description: This app gets the CPU environment data every 5 seconds and displays it on the console
 '''
 # import psutil
 from time import sleep
