@@ -3,13 +3,13 @@ Created on Oct 12, 2018
 
 @author: ashwath
 '''
-import smbus
+# import smbus
 import threading
 from time import sleep
 from labs.common import ConfigUtil
 from labs.common import ConfigConst
 
-i2cBus= smbus.SMBus(1) # Use I2C bus No.1 on Raspberry Pi3 +
+# i2cBus= smbus.SMBus(1) # Use I2C bus No.1 on Raspberry Pi3 +
 enableControl = 0x2D
 enableMeasure = 0x08
 
@@ -41,32 +41,32 @@ class I2CSenseHatAdaptor(threading.Thread):
     def initI2CBus(self):
         
         print("Initializing I2C bus and enabling I2C addresses...")
-        i2cBus.write_byte_data(accelAddr, enableControl, enableMeasure)
+#         i2cBus.write_byte_data(accelAddr, enableControl, enableMeasure)
         # TODO: do the same for the magAddr, pressAddr, and humidAddr
         # NOTE: Reading data from the sensor will look like the following:
         
 #         data = i2cBus.read_i2c_block_data({sensor address}, {starting read address}, {number of bytes})
         
     def displayAccelerometerData(self):
-        data = i2cBus.read_i2c_block_data(accelAddr, begAddr, totBytes)
+#         data = i2cBus.read_i2c_block_data(accelAddr, begAddr, totBytes)
         print('accelerometer reading: ')
-        print(data)
+#         print(data)
     
     def displayMagnetometerData(self):
-        data = i2cBus.read_i2c_block_data(magAddr, begAddr, totBytes)
+#         data = i2cBus.read_i2c_block_data(magAddr, begAddr, totBytes)
         print('magnetometer reading: ')
-        print(data)
+#         print(data)
         
     def displayPressureData(self):
-        data = i2cBus.read_i2c_block_data(pressAddr, begAddr, totBytes)
+#         data = i2cBus.read_i2c_block_data(pressAddr, begAddr, totBytes)
         print('pressure sensor data: ')
-        print(data)
+#         print(data)
         
         
     def displayHumidityData(self):
-        data = i2cBus.read_i2c_block_data(humidAddr, begAddr, totBytes)
+#         data = i2cBus.read_i2c_block_data(humidAddr, begAddr, totBytes)
         print('humidity sensor data: ')
-        print(data)
+#         print(data)
     
     
     def run(self):

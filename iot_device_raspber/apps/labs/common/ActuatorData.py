@@ -33,6 +33,8 @@ class ActuatorData():
     def __init__(self):
         self.updateTimeStamp()
     
+    
+    #Getters and setters
     def getCommand(self):
         return self.command
     
@@ -77,6 +79,7 @@ class ActuatorData():
     def setValue(self, val):
         self.val = val
 
+    #function that does all get functions
     def updateData(self, data):
         self.command    = data.getCommand()
         self.statusCode = data.getStatusCode()
@@ -88,7 +91,7 @@ class ActuatorData():
     def updateTimeStamp(self):
         self.timeStamp = str(datetime.now())
         
-    
+    #Define __str__ function to re-format printing   
     def __str__(self):
         customStr = \
             str(self.name  + ':' + \

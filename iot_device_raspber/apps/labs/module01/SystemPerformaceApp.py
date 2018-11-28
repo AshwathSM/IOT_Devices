@@ -12,6 +12,8 @@ sysPerfAdaptor = SystemPerformanceAdaptor.SystemPerformanceAdaptor()
 sysPerfAdaptor.daemon = True
 
 print("Starting system performance app daemon thread...")
+
+#Enable the adaptor
 sysPerfAdaptor.enableAdaptor=True
 
 #start the thread, and run it every 5 seconds (give a sleep time of 5 seconds)

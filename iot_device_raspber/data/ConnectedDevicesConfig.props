@@ -8,11 +8,11 @@ port= 1883
 [smtp.cloud]
 host = smtp.gmail.com
 port = 465
-fromAddr = Not Set
-toAddr  = Not Set
+fromAddr = notsoawesomeprogrammer@gmail.com
+toAddr  = notsoawesomeprogrammer@gmail.com
 toMediaAddr = Not Set
 toTxtAddr = Not Set
-authToken = Not Set
+authToken = Ammumma@123
 enableAuth = True
 enableCrypt = True
 

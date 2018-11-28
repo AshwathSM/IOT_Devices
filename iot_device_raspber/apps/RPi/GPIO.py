@@ -2,6 +2,9 @@
 Created on Oct 6, 2018
 
 @author: ashwath
+
+Description: This module helps to set-up the GPIO hardware and pass the approriate 
+rotation degree, mode selection, and pin selection
 '''
 BOARD= 0
 BCM= 1
