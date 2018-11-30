@@ -2,6 +2,8 @@ package org.ashwath.iot.module07;
 
 import java.util.logging.Logger;
 
+/*Create a CoAP_Client_Connector instance and attaches the client with a resource
+ * and runs the tests (all kinds of requests for testing)*/
 public class CoapConnectionClientApp {
 	
 	private static final Logger _logger = Logger.getLogger(CoapConnectionClientApp.class.getName());
@@ -10,10 +12,10 @@ public class CoapConnectionClientApp {
 	
 	public CoapConnectionClientApp()
 	{
-		super();
-		
+		super();		
 	}
 
+	/*creates the instance of the app and starts the app*/
 	public static void main(String[] args) {
 		
 		_app = new CoapConnectionClientApp();
@@ -27,6 +29,7 @@ public class CoapConnectionClientApp {
 
 	}
 	
+	/*instance of CoAP_Client_Connector is created and the runTests() method is called*/
 	public void start()
 	{
 		_coapClient = new CoAP_Client_Connector();
