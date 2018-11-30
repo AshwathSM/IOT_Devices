@@ -157,7 +157,7 @@ public class TempResourceHandler extends CoapResource {
 			fos.flush();
 			fos.close();
 			
-			/*respond to the client with VALID reponsecode and "success" message*/
+			/*respond to the client with VALID response code and "success" message*/
 			ce.respond(ResponseCode.VALID, "Success");			
 		
 			
