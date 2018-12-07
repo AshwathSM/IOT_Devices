@@ -33,7 +33,8 @@ public class CoapConnectionClientApp {
 	public void start()
 	{
 		_coapClient = new CoAP_Client_Connector();
-		_coapClient.runTests("temp");
+//		_coapClient.runTests("temp");
+		_coapClient.sendGetRequest("temp");
 	}
 
 }

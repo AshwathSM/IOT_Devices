@@ -38,7 +38,7 @@ public class CoAP_Client_Connector
 	 * running in the local machine and insecure connection (default)*/
 	public CoAP_Client_Connector()
 	{
-		this("127.0.0.1", false);
+		this("10.0.0.228", false);
 	}
 	
 	/*
